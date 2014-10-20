@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
+	<classpathentry kind="lib" path="F:/Diff/Topic 提取/DataSource/lib/args4j-2.0.6.jar"/>
+	<classpathentry kind="lib" path="F:/Diff/Topic 提取/DataSource/lib/intt.jar"/>
+	<classpathentry kind="lib" path="F:/EvoDiff/EvoDiff/lib/sqlitejdbc-v056.jar"/>
+	<classpathentry kind="lib" path="C:/Users/jqt/Desktop/eclipse/workspace/NewRevisionPatternGrub/lib/mysql-connector-java-3.1.12-bin.jar"/>
+	<classpathentry kind="lib" path="C:/Users/jqt/Downloads/stanford-corenlp-v1.1.0/stanford-corenlp-2011-06-19/fastutil.jar"/>
+	<classpathentry kind="lib" path="C:/Users/jqt/Downloads/stanford-corenlp-v1.1.0/stanford-corenlp-2011-06-19/jgraph.jar"/>
+	<classpathentry kind="lib" path="C:/Users/jqt/Downloads/stanford-corenlp-v1.1.0/stanford-corenlp-2011-06-19/jgrapht.jar"/>
+	<classpathentry kind="lib" path="C:/Users/jqt/Downloads/stanford-corenlp-v1.1.0/stanford-corenlp-2011-06-19/stanford-corenlp-2011-06-19.jar"/>
+	<classpathentry kind="lib" path="C:/Users/jqt/Downloads/stanford-corenlp-v1.1.0/stanford-corenlp-2011-06-19/stanford-corenlp-models-2011-06-19.jar"/>
+	<classpathentry kind="lib" path="C:/Users/jqt/Downloads/stanford-corenlp-v1.1.0/stanford-corenlp-2011-06-19/xom.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
