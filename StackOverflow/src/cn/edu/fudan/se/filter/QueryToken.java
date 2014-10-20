@@ -14,22 +14,23 @@ public class QueryToken {
     private Stemmer ste;
     private FudanIdentifierNameTokeniserFactory factory;
     private int minLength = 2;
+    private ArrayList<String> result;
     
-    public QueryToken()
+    public QueryToken(String query)
     {
     	fsw = new FilterStopWord();
     	fsw.setStopWordLength(4);//
     	ste = new Stemmer();
     	factory = new FudanIdentifierNameTokeniserFactory();
     	identifierNametokeniser = factory.create();
+    	result = new ArrayList<String>();
+    	tokeniseOnly(query);
     }
 
-    public List<String> tokeniseOnly(String line) {
+    public void tokeniseOnly(String line) {
     	String stemm = ste.getStringAfterStemming(line);
     	String filterStopWord = fsw.getStringWithoutStopWord(stemm);
-    	System.out.println("Stem:"+stemm);
         String[] tokens = identifierNametokeniser.tokenise(filterStopWord);
-        ArrayList<String> result = new ArrayList<String>();
 
         for (String token : tokens) {
             token = token.trim();
@@ -45,13 +46,26 @@ public class QueryToken {
                 result.add(token);
             }
         }
-
-        return result;
+    }
+    
+    public String getToken()
+    {
+    	String token = "";
+    	for(int i = 0; i < result.size(); i++)
+    	{
+    		if(i == result.size()-1)
+    			token += result.get(i)+"%";
+    		else
+    			token += result.get(i) + "%";
+    	}
+    	return token;
+    	
+    	
     }
     
     public static void main(String args[])
     {
-    	QueryToken qt = new QueryToken();
-    	System.out.println(qt.tokeniseOnly("I cannot connect to mysql").toString());
+//    	QueryToken qt = new QueryToken();
+//    	System.out.println(qt.tokeniseOnly("I cannot connect to mysql").toString());
     }
 }

@@ -25,24 +25,34 @@ public class Result {
     List<Post> posts;
     List<Integer> sortTopic;
     LDAOperator LDAO;
+    private String queryToken;
+    
+    public void setQueryToken(String token)
+    {
+    	this.queryToken = token;
+    }
 
     public void init() {
         LDAO = LDAOperator.getInstance();
         PostDAOImpl pdi = new PostDAOImpl();
-        posts = pdi.findPosts("connect mysql");
-        System.out.println("ok");
-        LDAO.doLDAAnalysis(posts);
-        
-        topic_word = LDAO.getTopicWord();
-        document_topic = LDAO.getDocumentTopic();
-        words = LDAO.getWordList();
-        
-        topicWord = new HashMap<Integer, String>();
-        topicDocument = new HashMap<Integer, String>();
-        sortTopic =  new ArrayList<Integer>();
-        
-        processTopicWord();
-        porcessTopicDocumentAndSortTopic();
+        System.out.println(queryToken);
+        posts = pdi.findPosts(queryToken);
+        for(int i = 0; i < posts.size(); i++)
+        {
+        	System.out.println(posts.get(i).post_title);
+        }
+//        LDAO.doLDAAnalysis(posts);
+//        
+//        topic_word = LDAO.getTopicWord();
+//        document_topic = LDAO.getDocumentTopic();
+//        words = LDAO.getWordList();
+//        
+//        topicWord = new HashMap<Integer, String>();
+//        topicDocument = new HashMap<Integer, String>();
+//        sortTopic =  new ArrayList<Integer>();
+//        
+//        processTopicWord();
+//        porcessTopicDocumentAndSortTopic();
         
         
     }
