@@ -28,7 +28,7 @@ public class PostDAOImpl implements PostDAO {
 		
 		
 		String SQLString = "SELECT * FROM stackoverflowdata.newposts WHERE CONCAT(title,tags,body) like '"
-				+ keywords +"'";
+				+ "sort%" +"'" +"or CONCAT(title,tags,body) like 'list%'";
 
 		try {
 			pstmt = conn.prepareStatement(SQLString);
