@@ -4,6 +4,7 @@ public class WordProperty {
 	
 	private String word;
 	private String property;
+	private String lemma;
 	private boolean iS;
 	
 	public WordProperty(String word,String property,boolean iS)
@@ -11,6 +12,20 @@ public class WordProperty {
 		this.word = word;
 		this.property = property;
 		this.iS = iS;
+	}
+	
+	public WordProperty(String word,String lemma,String property,boolean iS)
+	{
+		this.word = word;
+		this.property = property;
+		this.lemma = lemma;
+		this.iS = iS;
+	}
+	
+	
+	public String getLemmaWord()
+	{
+		return lemma;
 	}
 	public String getWord() {
 		return word;

@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Properties;
 
 import edu.stanford.nlp.dcoref.CorefChain;
+import edu.stanford.nlp.ling.CoreAnnotations.LemmaAnnotation;
 import edu.stanford.nlp.ling.CoreAnnotations.NamedEntityTagAnnotation;
 import edu.stanford.nlp.ling.CoreAnnotations.PartOfSpeechAnnotation;
 import edu.stanford.nlp.ling.CoreAnnotations.SentencesAnnotation;
@@ -29,13 +30,25 @@ public class TestCoreNLP {
 	
 	private List<Sentence> sentenceList = new ArrayList<Sentence>();
 	
+	private StanfordCoreNLP pipeline;
+	
+	private Properties props;
+	public TestCoreNLP()
+	{
+		
+	    props = new Properties();
+	    props.put("annotators", "tokenize,ssplit,pos,lemma,ner,parse,dcoref");
+	    pipeline = new StanfordCoreNLP(props);
+		
+	}
+	
 	public void CoreNLP(String text)
 	{
-		Properties props = new Properties();
-		props.put("annotators", "tokenize,ssplit,pos,lemma,ner,parse,dcoref");
-		
-		StanfordCoreNLP pipeline = new StanfordCoreNLP(props);
+		sentenceList.clear();
+		wordProperty.clear();
+		WordProperty wp;
 		Annotation document = new Annotation(text);
+		
 		pipeline.annotate(document);
 		
 		List<CoreMap> sentences = document.get(SentencesAnnotation.class);
@@ -51,17 +64,23 @@ public class TestCoreNLP {
 			{
 				String word = token.get(TextAnnotation.class);
 				String pos = token.get(PartOfSpeechAnnotation.class);
+				String lemma = token.get(LemmaAnnotation.class); 
+				
 				System.out.println(word +"  " + pos);
 				if(word.equals("-LRB-"))
 					word = "(";
 				if(word.equals("-RRB-"))
 					word = ")";
-				WordProperty wp = new WordProperty(word,pos,true);
 				
+				if(pos.contains("V"))
+					wp = new WordProperty(word,lemma,pos,true);
+				else
+					
+				    wp = new WordProperty(word,pos,true);
 				wordProperty.add(wp);
 			}
 			
-			System.out.println("Sentence:"+sentence);
+//			System.out.println("Sentence:"+sentence);
 			List<List<WordProperty>> splitList = splitClause(wordProperty);
 			sen.setClause(splitList);
 			List<List<WordProperty>> translateList = translateClause(splitList);
@@ -77,7 +96,7 @@ public class TestCoreNLP {
 			
 		}
 		
-		Map<Integer,CorefChain> graph = document.get(CorefChainAnnotation.class);
+//		Map<Integer,CorefChain> graph = document.get(CorefChainAnnotation.class);
 		
 	}
 	
@@ -242,7 +261,8 @@ public class TestCoreNLP {
 				}
 				else
 					translateList.add(wpList);
-			}
+			}else
+				translateList.add(wpList);
 		}
 		
 		
@@ -396,10 +416,14 @@ public class TestCoreNLP {
 		         }
 		        
 			}
+			predicate.init();
 			clause.setPredicate(predicate);
+			subject.init();
 			clause.setSubject(subject);
+			object.init();
 			clause.setObject(object);
-			System.out.println(subject.toString() +"|"+predicate.toString()+"|"+object.toString());
+			clause.init();
+//			System.out.println(subject.toString() +"|"+predicate.toString()+"|"+object.toString());
 		}
 		
 	}
@@ -457,6 +481,8 @@ public class TestCoreNLP {
 				return i;
 			if(wp.getProperty().equals("RB"))
 				return i;
+			if(wp.getProperty().equals("CC"))
+				return i;
 			if(pointer >= 1)
 				return index;
 				
@@ -474,7 +500,7 @@ public class TestCoreNLP {
 			pointer ++;
 			if(wp.getProperty().equals("TO"))
 				return i;
-			if(pointer >= 4)
+			if(pointer >= 5)
 				return index;
 				
 		}
@@ -490,6 +516,8 @@ public class TestCoreNLP {
 		}
 		return copyList;
 	}
+	
+
 	
 	public boolean judgeClause(List<WordProperty> wpList)
 	{
@@ -525,6 +553,11 @@ public class TestCoreNLP {
 	
 	}
 	
+	public List<Sentence> getSentence()
+	{
+		return sentenceList;
+	}
+	
 	public void showSentenceComponent()
 	{
 		for(Sentence sen:sentenceList)
@@ -537,8 +570,12 @@ public class TestCoreNLP {
 				Subject subject = clause.getSubject();
 				Predicate predicate = clause.getPredicate();
 				Object object = clause.getObject();
-				System.out.println("Subject["+subject.toString()+"]"+" Predicate["+predicate.toString()+"]"+
-				" Object["+object.toString()+"]");
+				
+				System.out.println("Subject["+subject.toString()+"]" +" Predicate["+predicate.toString()+"]"+
+						" Object["+object.toString()+"]");
+				System.out.println("-------");
+				System.out.println("Subject["+subject.getSubject()+"]" +"S-E["+subject.getEnvironment()+"]"+" Predicate["+predicate.getPredicate()+"-"+predicate.getSynonyms()+"]"+ " P-E["+predicate.getEnvironment()+"]"
+				+" Object["+object.getObject()+"]" + "O-E["+object.getEnvironment()+"]"+" Authority["+clause.getAuthority()+"]");
 			}
 		}
 	}
@@ -550,21 +587,22 @@ public class TestCoreNLP {
 //		String text = "I have Qt5.4mingwRC1 on windows and it works without any problem but there is an issue with QML files and the designer.";	
 //		String text = "How do you add a column, with a default value, to an existing table in SQL Server 2000/SQL Server 2005?";	
 //      String text = "I like this answer a little better than dbugger's because I make the default constraint";
-//		String text = "On all qml file (even with example projects), i have an error message ¡°Using Qt Quick code model instead of Qt Quick2 (M324) (4:1)¡± and i can¡¯t use the design editor.";
+//		String text = "On all qml file (even with example projects), "
+//				+ "i have an error message ¡°Using Qt Quick code model instead of Qt Quick2 (M324) (4:1)¡± and i can¡¯t use the design editor.";
 //		String text = "I  can't make and write a decision that is important.";
 //		String text = "Before Qt5.4 I was using Qt5.3 and there was no such that error.";
 //		String text = "You will need to set the QML_IMPORT_PATH to the proper installation.";
 //		String text = "Issue with qml files and designer tab of QtCreator of Qt5.4mingwRC1";
 //		String text = "When performing an FFT on a signal, does information about the relevant pass-band allow the algorithm to be more efficient?";
 		
-		String text = "When data is stored on disk based storage devices, "
-				+ "it is stored as blocks of data. "
-				+ "These blocks are accessed in their entirety,"
-				+ " making them the atomic disk access operation. "
-				+ "Disk blocks are structured in much the same way as linked lists; "
-				+ "both contain a section for data, "
-				+ "a pointer to the location of the next node (or block),"
-				+ " and both need not be stored contiguously.";
+//		String text = "When data is stored on disk based storage devices, "
+//				+ "it is stored as blocks of data. "
+//				+ "These blocks are accessed in their entirety,"
+//				+ " making them the atomic disk access operation. "
+//				+ "Disk blocks are structured in much the same way as linked lists; "
+//				+ "both contain a section for data, "
+//				+ "a pointer to the location of the next node (or block),"
+//				+ " and both need not be stored contiguously.";
 		
 //		String text = "Deprecation isn't the magic bullet everyone seems to think it is. "
 //				+ "PHP itself will not be there one day, yet we rely on the tools we have at our disposal today."
@@ -575,6 +613,16 @@ public class TestCoreNLP {
 //		String text = "I have a room where is tool.";
 //		String text = "Moving away from ext/mysql is not only about security,"
 //				+ " but also about having access to all the features of the MySQL database.";
+//		String text = "You can also pass in several driver options as an array to the fourth parameter. "
+//				+ "I recommend passing the parameter which puts PDO into exception mode. "
+//				+ "Because some PDO drivers don't support native prepared statements, so PDO performs emulation of the prepare. "
+//				+ "It also lets you manually enable this emulation. "
+//				+ "To use the native server-side prepared statements, you should explicitly set it ";
+		
+//		String text = "What is the simplest way to present a database for a set of records in C#?";
+		String text = "Throw an error in a MySQL trigger.";
+
+
 		TestCoreNLP tcNLP = new TestCoreNLP();
 		tcNLP.CoreNLP(text);
 		System.out.println("------------------------");
@@ -584,11 +632,6 @@ public class TestCoreNLP {
 //		System.out.println("subject:" + tcNLP.getSubject(sentence) 
 //				+ " verbGroup:" + tcNLP.getVerbGroup(sentence) + " object:" + tcNLP.getObject(sentence)
 //				+ " environment:" + tcNLP.getEnvironment(sentence));
-		
-		
-		
+			
 	}
-	
-	
-
 }

@@ -7,9 +7,9 @@ public class MainTest {
 	
 	public static void main(String args[])
 	{
-		QueryToken qt = new QueryToken("sort list");
-		Result result = new Result();
-		result.setQueryToken(qt.getToken());
+//		QueryToken qt = new QueryToken("database");
+		Result result = new Result("database");
+//		result.setQueryToken(qt.getToken());
 		result.init();
 //		result.outPutTopicWordsDocument();
 	}

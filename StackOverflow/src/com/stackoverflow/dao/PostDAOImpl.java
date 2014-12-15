@@ -23,17 +23,19 @@ public class PostDAOImpl implements PostDAO {
 		// String keywords = "java,mysql,database";
 		// generate query string based on separate keywords
 		// using regexp replace('keyword1,keyword2',',','|')
-//		String SQLString = "SELECT * FROM stackoverflowdata.newposts WHERE CONCAT(title,tags,body) regexp replace('"
-//				+ keywords + "',',','|')limit 100";
+		System.out.println("String:"+keywords);
+		String SQLString = "SELECT * FROM stackoverflowdata.posts WHERE CONCAT(title,tags,body) regexp replace('"
+				+ keywords + "',',','|')limit 100";
 		
 		
-		String SQLString = "SELECT * FROM stackoverflowdata.newposts WHERE CONCAT(title,tags,body) like '"
-				+ "sort%" +"'" +"or CONCAT(title,tags,body) like 'list%'";
+//		String SQLString = "SELECT * FROM stackoverflowdata.posts WHERE CONCAT(title,tags,body) like '"
+//				+ "sort%" +"'" +"or CONCAT(title,tags,body) like 'list%'";
 
 		try {
 			pstmt = conn.prepareStatement(SQLString);
 			ResultSet rs = pstmt.executeQuery();
 			posts = constructedPostList(rs);
+			System.out.println("Size:"+posts.size());
 		} catch (Exception ex) {
 			System.out.println("Error : " + ex.toString());
 		} finally {
@@ -153,11 +155,11 @@ public class PostDAOImpl implements PostDAO {
 			int post_answer_count = rs.getInt("AnswerCount");//may be null
 			int accepted_answerId = rs.getInt("AcceptedAnswerId");//may be null
 
-			if(!FilterPost.FilterAnswerCount(post_answer_count))
-				continue;
-			FilterPost.setFilterTag("mysql");
-			if(!FilterPost.FilterTag(post_tag))
-				continue;
+//			if(!FilterPost.FilterAnswerCount(post_answer_count))
+//				continue;
+//			FilterPost.setFilterTag("mysql");
+//			if(!FilterPost.FilterTag(post_tag))
+//				continue;
 			switch (post_typeId) {
 			case 1: {
 				Question question = new Question(postId,post_title, post_body,post_tag,post_comment_count,parentId,post_answer_count,accepted_answerId);

@@ -10,7 +10,9 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
+import com.stackoverflow.bean.Answer;
 import com.stackoverflow.bean.Post;
+import com.stackoverflow.bean.Question;
 import com.stackoverflow.dao.PostDAOImpl;
 
 
@@ -27,19 +29,36 @@ public class Result {
     LDAOperator LDAO;
     private String queryToken;
     
-    public void setQueryToken(String token)
+    public Result(String queryToken)
     {
-    	this.queryToken = token;
-    }
-
-    public void init() {
-        LDAO = LDAOperator.getInstance();
+    	LDAO = LDAOperator.getInstance();
         PostDAOImpl pdi = new PostDAOImpl();
         System.out.println(queryToken);
         posts = pdi.findPosts(queryToken);
+    }
+    
+    public List<Post> getPosts()
+    {
+    	
+    	return posts;
+    }
+
+    public void init() {
+        
+        Post post;
+        int id  = 0;
         for(int i = 0; i < posts.size(); i++)
         {
-        	System.out.println(posts.get(i).post_title);
+        	post = posts.get(i);
+            if(post.parentId == 0)
+            {
+            	id ++;
+        		System.out.println(id+"  "+post.post_title);
+        		System.out.println(getString(post.post_body_text));
+            }
+     
+//        	id ++ ;
+        	
         }
 //        LDAO.doLDAAnalysis(posts);
 //        
@@ -55,6 +74,29 @@ public class Result {
 //        porcessTopicDocumentAndSortTopic();
         
         
+    }
+    
+    public String getString(String text)
+    {
+    	text = text.replace("&#xD;", "").replace("&#xA;", "");
+    	boolean is = true;
+    	int index1,index2;
+    	String s1,s2;
+    	while(is)
+    	{
+    		index1 = text.indexOf("<");
+        	index2 = text.indexOf(">");
+        	if(index1!=-1&&index2!=-1)
+        	{
+        		s1 = text.substring(0,index1);
+        		s2 = text.substring(index2+1,text.length());
+        		text = s1+s2;
+        	}else
+        		is = false;
+    	}
+    	
+ 
+    	return text;
     }
 
     public void processTopicWord() {

@@ -3,6 +3,8 @@ package com.stackoverflow.bean;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jsoup.Jsoup;
+
 public class Post {
 	//common attributes
 	public int postId;
@@ -58,6 +60,12 @@ public class Post {
 		}
 		post_body_text = post_body;
 	}
+	
+	public String getText(String text)
+	{
+		return Jsoup.parse(text).body().text();
+	}
+	
 	public String getPost_body() {
 		return post_body;
 	}
