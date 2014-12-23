@@ -8,7 +8,7 @@ public class MainTest {
 	public static void main(String args[])
 	{
 //		QueryToken qt = new QueryToken("database");
-		Result result = new Result("database");
+		Result result = new Result("query");//两个关键词之间要增加逗号
 //		result.setQueryToken(qt.getToken());
 		result.init();
 //		result.outPutTopicWordsDocument();

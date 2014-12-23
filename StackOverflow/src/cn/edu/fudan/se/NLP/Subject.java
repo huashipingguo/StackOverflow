@@ -41,6 +41,18 @@ public class Subject {
     	return environment;
     }
     
+    public String getNoun()
+    {
+    	String noun = "";
+    	for(WordProperty wp:subjectList)
+    	{
+    		if(wp.getProperty().contains("NN")||wp.getProperty().equals("WRB"))
+    			noun += wp.getLemmaWord() + ",";
+    	}
+    	
+    	return noun;
+    }
+    
     public void init()
     {
     	extractSubject();
@@ -90,7 +102,7 @@ public class Subject {
     				||wp.getProperty().equals("#")))
     		{
     			wp.setiS(false);
-    			subject += wp.getWord() + " ";
+    			subject += wp.getWord() + ",";
     		}
     	}
     }

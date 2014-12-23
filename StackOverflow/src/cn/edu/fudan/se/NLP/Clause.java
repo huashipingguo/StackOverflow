@@ -37,6 +37,13 @@ public class Clause {
 		}
 	}
 	
+	public String getKeyWord()
+	{
+		String noun = subject.getNoun()+predicate.getVerb()+object.getNoun();
+		int index = noun.lastIndexOf(",");
+		return noun.substring(0,index);
+		
+	}
 	public String getAuthority()
 	{
 		return authority;

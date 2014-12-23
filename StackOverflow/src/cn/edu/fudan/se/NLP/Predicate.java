@@ -37,6 +37,18 @@ public class Predicate {
     {
     	return environment;
     }
+    
+    public String getVerb()
+    {
+    	String verb = "";
+    	for(WordProperty wp:predicateList)
+    	{
+    		if(wp.getProperty().contains("V"))
+    			verb += wp.getLemmaWord() + ",";
+    	}
+    	
+    	return verb;
+    }
     public void init()
     {
     	extractPredicate();
@@ -46,7 +58,7 @@ public class Predicate {
     	{
     		if(wp.getProperty().contains("V"))
     		{
-    			synonyms +=InitDomainDic.getInstance().getSynonyms(wp.getLemmaWord())+ " ";
+    			synonyms +=InitDomainDic.getInstance().getSynonyms(wp.getLemmaWord())+ ",";
     		}
     	}
     	
@@ -79,7 +91,7 @@ public class Predicate {
     		if(wp.getProperty().equals("VB")||wp.getProperty().equals("VBZ")||wp.getProperty().equals("VBP")
     				||wp.getProperty().equals("VBD")||wp.getProperty().equals("VBN"))
     		{
-    			predicate += wp.getWord() + " ";
+    			predicate += wp.getWord() + ",";
     			wp.setiS(false);
     		}
     	}

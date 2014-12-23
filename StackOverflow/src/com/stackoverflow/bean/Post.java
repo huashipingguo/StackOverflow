@@ -15,6 +15,8 @@ public class Post {
 	public String post_title;
 	public String post_tag;
 	
+	public float grade = 0;
+	
 	public int post_comment_count;
 	public List<Comment> commentList;
 	
@@ -59,6 +61,16 @@ public class Post {
 			post_body = post_body.substring(0,prefixIndex)+post_body.substring(postfixIndex,post_body.length());
 		}
 		post_body_text = post_body;
+	}
+	
+	public void setGrade(float gade)
+	{
+		this.grade = grade;
+	}
+	
+	public float getGrade()
+	{
+		return grade;
 	}
 	
 	public String getText(String text)

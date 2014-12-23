@@ -15,7 +15,26 @@ public class Object {
     
     public String getObject()
     {
-    	return object;
+    	String[] s = object.split(",");
+    	int lenght = s.length;
+    	String language = "";
+    	for(int i = 0; i < lenght ; i++)
+    	{
+    		if(s[i].equalsIgnoreCase("c"))
+    		{
+    			if(i == lenght-1)
+    			{
+    				language = "C&";
+    			}else if(s[i+1].equalsIgnoreCase("+"))
+    			{
+    				language = "C++";
+    			}else if(s[i+1].equalsIgnoreCase("#"))
+    			{
+    				language = "C#";
+    			}
+    		}
+    	}
+    	return object+language;
     }
     public void addSubject(List<WordProperty> object)
     {
@@ -35,6 +54,18 @@ public class Object {
     public String getEnvironment()
     {
     	return environment;
+    }
+    
+    public String getNoun()
+    {
+    	String noun = "";
+    	for(WordProperty wp:objectList)
+    	{
+    		if(wp.getProperty().contains("NN"))
+    			noun += wp.getLemmaWord() + ",";
+    	}
+    	
+    	return noun;
     }
     
     public void init()
@@ -81,7 +112,7 @@ public class Object {
     		if(isOpen&&(wp.getProperty().contains("NN")||wp.getProperty().equals("CD")||wp.getProperty().equals("FW")||wp.getProperty().equals("#")))
     		{
     			wp.setiS(false);
-    			object += wp.getWord() + " ";
+    			object += wp.getWord() + ",";
     		}
     	}
     }

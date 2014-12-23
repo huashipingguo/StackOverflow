@@ -42,9 +42,11 @@ public class TestCoreNLP {
 		
 	}
 	
-	public void CoreNLP(String text)
+	
+	
+	public Clause QuerySentence(String text)
 	{
-		sentenceList.clear();
+		Clause clause = new Clause();
 		wordProperty.clear();
 		WordProperty wp;
 		Annotation document = new Annotation(text);
@@ -72,11 +74,48 @@ public class TestCoreNLP {
 				if(word.equals("-RRB-"))
 					word = ")";
 				
-				if(pos.contains("V"))
-					wp = new WordProperty(word,lemma,pos,true);
-				else
-					
-				    wp = new WordProperty(word,pos,true);
+				wp = new WordProperty(word,lemma,pos,true);
+				wordProperty.add(wp);
+			}
+			clause.setClause(text);
+			extractSentenceComponents(wordProperty,clause);
+	
+		}
+		return clause;
+		
+		
+	}
+	public void CoreNLP(String text)
+	{
+		sentenceList.clear();
+		wordProperty.clear();
+		WordProperty wp;
+		Annotation document = new Annotation(text);
+		
+		pipeline.annotate(document);
+		
+		List<CoreMap> sentences = document.get(SentencesAnnotation.class);
+		
+		for(CoreMap sentence:sentences)
+		{
+			
+		  Sentence sen = new Sentence();
+		  sen.setSentence(sentence.toString());
+		  sentenceList.add(sen);
+		   wordProperty.clear();
+			for(CoreLabel token:sentence.get(TokensAnnotation.class))
+			{
+				String word = token.get(TextAnnotation.class);
+				String pos = token.get(PartOfSpeechAnnotation.class);
+				String lemma = token.get(LemmaAnnotation.class); 
+				
+//				System.out.println(word +"  " + pos);
+				if(word.equals("-LRB-"))
+					word = "(";
+				if(word.equals("-RRB-"))
+					word = ")";
+				
+				wp = new WordProperty(word,lemma,pos,true);
 				wordProperty.add(wp);
 			}
 			
@@ -334,6 +373,91 @@ public class TestCoreNLP {
 	
 		
 		return replaceList;
+		
+	}
+	
+	public void extractSentenceComponents(List<WordProperty> wpList,Clause clause)
+	{
+			Subject subject = new Subject();
+			Predicate predicate = new Predicate();
+			Object object = new Object();
+			WordProperty wp;
+			int num = wpList.size();
+			boolean isSubject = true,isVerb = false,isObject = false,iS = true;;
+			int index = 1000;
+			
+			for(int i = 0; i < num ; i++)
+			{
+				 wp = wpList.get(i);
+		         if(iS&&(wp.getProperty().equals("VV")||wp.getProperty().equals("VBD")
+		            		||wp.getProperty().equals("VBN")||wp.getProperty().equals("VBP")
+		            		||wp.getProperty().equals("VBZ")||wp.getProperty().equals("VB"))
+		            		||wp.getProperty().equals("VE")||wp.getProperty().equals("VC"))
+		         {
+		        	 int  tempIndex  = verbPhrase(i,wpList);
+		        	
+		        	 if(wp.getWord().equals("'ve")||wp.getWord().equalsIgnoreCase("has")
+			        		 ||wp.getWord().equalsIgnoreCase("have"))
+			         {
+			            index = haExpress(i,wpList);
+			         }else
+			       	 {
+			        	 index = toInfinitive(i,wpList);
+			       	 } 
+		        	 if(tempIndex > index)
+		        		 index = tempIndex;
+		        	 isVerb = true;
+		        	 isSubject = false;
+		        	 isObject = false;
+		         }
+		         
+		         if(iS&&wp.getProperty().equals("MD"))
+		         {
+		        	 index = modal(i,wpList); 
+//		        	 System.out.println("index Modal:"+index);
+		        	 isVerb = true;
+		        	 isSubject = false;
+		        	 isObject = false;
+		         }
+		    
+		         if(i > index)
+		         {
+		        	 isObject = true;
+		        	 isSubject = false;
+		        	 isVerb = false;
+		         }
+		         if(isSubject)//get subject
+		         {
+		        	 subject.addSubject(wp);
+		         }
+		         if(i <= index&&isVerb)//get verb
+		         {
+//		        	 System.out.println(i+"|"+index);
+		        	 for(int j = i; j <= index ; j++)
+		        	 {
+		        		 wp = wpList.get(j);
+		        		 predicate.addPredicate(wp);	
+		        	 }
+		        	 i = index;
+		         
+		         }
+		         if(isObject)//get object
+		         {
+		        	object.addObject(wp);
+		        	 iS = false;
+		        	 
+		         }
+		        
+			}
+			predicate.init();
+			clause.setPredicate(predicate);
+			subject.init();
+			clause.setSubject(subject);
+			object.init();
+			clause.setObject(object);
+			clause.init();
+//			System.out.println(subject.toString() +"|"+predicate.toString()+"|"+object.toString());
+
 		
 	}
 	
@@ -620,7 +744,7 @@ public class TestCoreNLP {
 //				+ "To use the native server-side prepared statements, you should explicitly set it ";
 		
 //		String text = "What is the simplest way to present a database for a set of records in C#?";
-		String text = "Throw an error in a MySQL trigger.";
+        String text = "I am coding in C++.";
 
 
 		TestCoreNLP tcNLP = new TestCoreNLP();

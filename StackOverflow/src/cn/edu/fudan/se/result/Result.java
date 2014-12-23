@@ -35,6 +35,7 @@ public class Result {
         PostDAOImpl pdi = new PostDAOImpl();
         System.out.println(queryToken);
         posts = pdi.findPosts(queryToken);
+//        init();
     }
     
     public List<Post> getPosts()
@@ -50,12 +51,12 @@ public class Result {
         for(int i = 0; i < posts.size(); i++)
         {
         	post = posts.get(i);
-            if(post.parentId == 0)
-            {
+//            if(post.parentId == 0)
+//            {
             	id ++;
         		System.out.println(id+"  "+post.post_title);
-        		System.out.println(getString(post.post_body_text));
-            }
+        		System.out.println(post.post_body_text);
+//            }
      
 //        	id ++ ;
         	
@@ -76,28 +77,6 @@ public class Result {
         
     }
     
-    public String getString(String text)
-    {
-    	text = text.replace("&#xD;", "").replace("&#xA;", "");
-    	boolean is = true;
-    	int index1,index2;
-    	String s1,s2;
-    	while(is)
-    	{
-    		index1 = text.indexOf("<");
-        	index2 = text.indexOf(">");
-        	if(index1!=-1&&index2!=-1)
-        	{
-        		s1 = text.substring(0,index1);
-        		s2 = text.substring(index2+1,text.length());
-        		text = s1+s2;
-        	}else
-        		is = false;
-    	}
-    	
- 
-    	return text;
-    }
 
     public void processTopicWord() {
     	List<IdValue> list = new ArrayList<IdValue>();

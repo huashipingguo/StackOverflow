@@ -24,10 +24,10 @@ public class PostDAOImpl implements PostDAO {
 		// generate query string based on separate keywords
 		// using regexp replace('keyword1,keyword2',',','|')
 		System.out.println("String:"+keywords);
-		String SQLString = "SELECT * FROM stackoverflowdata.posts WHERE CONCAT(title,tags,body) regexp replace('"
-				+ keywords + "',',','|')limit 100";
+//		String SQLString = "SELECT * FROM stackoverflowdata.posts WHERE PostTypeId = 1 and CONCAT(title,tags,body) regexp replace('"
+//				+keywords+"',',','|') limit 20";
 		
-		
+		String SQLString = "SELECT * FROM stackoverflowdata.posts WHERE PostTypeId = 1 and title like '%how%' and title like '%query%' and title like '%table%' limit 20";
 //		String SQLString = "SELECT * FROM stackoverflowdata.posts WHERE CONCAT(title,tags,body) like '"
 //				+ "sort%" +"'" +"or CONCAT(title,tags,body) like 'list%'";
 
@@ -35,7 +35,6 @@ public class PostDAOImpl implements PostDAO {
 			pstmt = conn.prepareStatement(SQLString);
 			ResultSet rs = pstmt.executeQuery();
 			posts = constructedPostList(rs);
-			System.out.println("Size:"+posts.size());
 		} catch (Exception ex) {
 			System.out.println("Error : " + ex.toString());
 		} finally {
@@ -140,13 +139,17 @@ public class PostDAOImpl implements PostDAO {
 
 	public List<Post> constructedPostList(ResultSet rs) throws SQLException{
 		List<Post> posts = new ArrayList<Post>();
+		int id = 0;
 		try {
 		while (rs.next()) {
 			//comment Attribute;
+			id++;
 			int postId = rs.getInt("Id");
 			int post_typeId = rs.getInt("PostTypeId");
 			String post_title = rs.getString("title");
+
 			String post_body = rs.getString("body");
+
 			String post_tag = rs.getString("tags");
 			int post_comment_count = rs.getInt("CommentCount");//may be null
 			//Answer Attribute;
