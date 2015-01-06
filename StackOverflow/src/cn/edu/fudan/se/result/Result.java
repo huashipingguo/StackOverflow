@@ -5,6 +5,12 @@ import cn.edu.fudan.se.bean.lda.TopicToDocument;
 import cn.edu.fudan.se.bean.lda.TopicToWord;
 import cn.edu.fudan.se.datasource.LDAOperator;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -45,22 +51,36 @@ public class Result {
     }
 
     public void init() {
-        
-        Post post;
-        int id  = 0;
-        for(int i = 0; i < posts.size(); i++)
-        {
-        	post = posts.get(i);
-//            if(post.parentId == 0)
-//            {
-            	id ++;
-        		System.out.println(id+"  "+post.post_title);
-        		System.out.println(post.post_body_text);
-//            }
-     
-//        	id ++ ;
-        	
-        }
+    	
+    	try {    
+    		File file = new File("C:\\Users\\jqt\\Desktop\\test.txt");    
+    		FileOutputStream fos = new FileOutputStream(file);    
+    		OutputStreamWriter osw = new OutputStreamWriter(fos);     
+    		BufferedWriter bw = new BufferedWriter(osw);    
+    	    Post post;
+    	    int id = 0;
+    	    for(int i = 0; i < posts.size(); i++)
+    	    {
+    	    	id ++;
+    	        post = posts.get(i);
+    	        String s1  = id+" : "+ post.post_title+"\r\n" + post.post_body_text + "\r\n";
+    	        bw.write(s1);    
+        		bw.newLine();        
+        		bw.flush();     	          
+    	    }
+    	        	
+    		
+    		bw.close();  
+    		osw.close();    
+    	    fos.close();  
+    	}
+    	catch (FileNotFoundException e1)
+    	{     
+    		e1.printStackTrace();   
+    	} catch (IOException e2)
+    	{   
+    		e2.printStackTrace();   
+    	} 
 //        LDAO.doLDAAnalysis(posts);
 //        
 //        topic_word = LDAO.getTopicWord();

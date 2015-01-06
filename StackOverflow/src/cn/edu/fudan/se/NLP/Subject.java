@@ -55,8 +55,8 @@ public class Subject {
     
     public void init()
     {
-    	extractSubject();
-    	extractEnvironment();
+//    	extractSubject();
+//    	extractEnvironment();
     }
     
     public void extractEnvironment()

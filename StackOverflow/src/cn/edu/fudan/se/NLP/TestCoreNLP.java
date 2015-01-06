@@ -744,7 +744,7 @@ public class TestCoreNLP {
 //				+ "To use the native server-side prepared statements, you should explicitly set it ";
 		
 //		String text = "What is the simplest way to present a database for a set of records in C#?";
-        String text = "I am coding in C++.";
+        String text = " How to setup a connection timeout depending of the user login in MySQL";
 
 
 		TestCoreNLP tcNLP = new TestCoreNLP();

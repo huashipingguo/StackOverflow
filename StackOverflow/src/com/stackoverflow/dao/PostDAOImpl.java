@@ -27,7 +27,7 @@ public class PostDAOImpl implements PostDAO {
 //		String SQLString = "SELECT * FROM stackoverflowdata.posts WHERE PostTypeId = 1 and CONCAT(title,tags,body) regexp replace('"
 //				+keywords+"',',','|') limit 20";
 		
-		String SQLString = "SELECT * FROM stackoverflowdata.posts WHERE PostTypeId = 1 and title like '%how%' and title like '%query%' and title like '%table%' limit 20";
+		String SQLString = "SELECT * FROM stackoverflowdata.posts WHERE PostTypeId = 1 and title like '%how%' and title like '%connect%' and title like '%mysql%' limit 20";
 //		String SQLString = "SELECT * FROM stackoverflowdata.posts WHERE CONCAT(title,tags,body) like '"
 //				+ "sort%" +"'" +"or CONCAT(title,tags,body) like 'list%'";
 

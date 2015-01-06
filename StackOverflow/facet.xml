@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="GB2312"?>
+<Facet>
+   <Environment>
+　　 <Language>
+    　　<Item>Java</Item>
+	<Model>
+	<Property>IN,PP</Property>
+	</Model>
+ 　　</Language>
+
+	<Language>
+    　　<Item>JSP</Item>
+    <Model>
+	<Property>IN,PP</Property>
+	</Model>
+　    　</Language>
+
+	<Language>
+    　　<Item>C++</Item>
+    <Model>
+	<Property>IN,PP</Property>
+	</Model>
+　　    </Language>
+
+	<Language>
+    　 　<Item>C#</Item>
+    <Model>
+	<Property>IN,PP</Property>
+	</Model>
+　　    </Language>
+
+	<Language>
+    　　<Item>C</Item>
+    <Model>
+	<Property>IN,PP</Property>
+	</Model>
+　   　</Language>
+
+	<Language>
+     　 　<Item>JavaScript</Item>
+     <Model>
+	<Property>IN,PP</Property>
+	</Model>
+　    　</Language>
+
+	<Language>
+    　 　<Item>Android</Item>
+    <Model>
+	<Property>IN,PP</Property>
+	</Model>
+　    　</Language>
+
+	<Language>
+    　　<Item>PHP</Item>
+    <Model>
+	<Property>IN,PP</Property>
+	</Model>
+　　</Language>
+
+	<Language>
+    　　<Item>Python</Item>
+    <Model>
+	<Property>IN,PP</Property>
+	</Model>
+　 　</Language>
+
+	<Language>
+    　　<Item>NET</Item>
+    <Model>
+	<Property>IN,PP</Property>
+	</Model>
+　   　</Language>
+
+	<Language>
+    　　<Item>SQL</Item>
+    <Model>
+	<Property>IN,PP</Property>
+	</Model>
+　   　</Language>
+
+    　　 <Database>
+    　　<Item>Oracle</Item>
+    <Model>
+	<Property>IN,PP</Property>
+	</Model>
+ 　　</Database>
+ 
+ 　　 <Database>
+    　　<Item>SQLite</Item>
+    <Model>
+	<Property>IN,PP</Property>
+	</Model>
+ 　　</Database>
+ 
+ 　　 <Database>
+    　　<Item>MySQL</Item>
+    <Model>
+	<Property>IN,PP</Property>
+	</Model>
+ 　　</Database>
+ 
+ 
+ 　　 <System>
+    　　<Item>Linux</Item>
+    <Model>
+	<Property>IN,PP</Property>
+	</Model>
+ 　　</System>
+ 
+ 　    <System>
+    　　<Item>Windows</Item>
+    <Model>
+	<Property>IN,PP</Property>
+	</Model>
+ 　　</System>
+ 
+   　    <System>
+    　　<Item>IOS</Item>
+    <Model>
+	<Property>IN,PP</Property>
+	</Model>
+ 　　</System>
+ 
+
+  </Environment>
+</Facet>
+

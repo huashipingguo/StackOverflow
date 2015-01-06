@@ -24,7 +24,7 @@ public class Object {
     		{
     			if(i == lenght-1)
     			{
-    				language = "C&";
+    				language = "C";
     			}else if(s[i+1].equalsIgnoreCase("+"))
     			{
     				language = "C++";
@@ -70,8 +70,8 @@ public class Object {
     
     public void init()
     {
-    	extractObject();
-    	extractEnvironment();
+//    	extractObject();
+//    	extractEnvironment();
     }
     
     public void extractEnvironment()

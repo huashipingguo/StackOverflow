@@ -1,6 +1,9 @@
 package cn.edu.fudan.se.util;
 
+import java.util.HashMap;
 import java.util.List;
+
+import com.stackoverflow.bean.Post;
 
 public class Global {
 	
@@ -8,8 +11,7 @@ public class Global {
 	
 	public static String projectName = "Stack Overflow";
 	
-	public static boolean isOpen;
-	
+	public static boolean isOpen;	
 	public static String NEGATIVE = "NEGATIVE";
 	public static String SHOW = "SHOW";
 	public static String CREATE = "CREATE";
@@ -31,5 +33,6 @@ public class Global {
 	public static String QUERY = "QUERY";
 	public static String SUPPROT = "SUPPROT";
 	public static String REGARD = "REGARD";
+
 
 }

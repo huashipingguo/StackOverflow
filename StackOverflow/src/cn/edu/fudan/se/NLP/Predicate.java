@@ -51,8 +51,8 @@ public class Predicate {
     }
     public void init()
     {
-    	extractPredicate();
-    	extractEnvironment();
+//    	extractPredicate();
+//    	extractEnvironment();
     	
     	for(WordProperty wp:predicateList)
     	{

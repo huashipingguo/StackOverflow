@@ -12,5 +12,8 @@
 	<classpathentry kind="lib" path="C:/Users/jqt/Downloads/stanford-corenlp-v1.1.0/stanford-corenlp-2011-06-19/stanford-corenlp-2011-06-19.jar"/>
 	<classpathentry kind="lib" path="C:/Users/jqt/Downloads/stanford-corenlp-v1.1.0/stanford-corenlp-2011-06-19/stanford-corenlp-models-2011-06-19.jar"/>
 	<classpathentry kind="lib" path="C:/Users/jqt/Downloads/stanford-corenlp-v1.1.0/stanford-corenlp-2011-06-19/xom.jar"/>
+	<classpathentry kind="lib" path="C:/Users/jqt/Desktop/Others/stackoverflow/wordnet/edu.mit.jwi_2.1.5.jar"/>
+	<classpathentry kind="lib" path="C:/Users/jqt/Desktop/Others/stackoverflow/lib/jsoup-1.8.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/jqt/Desktop/Others/stackoverflow/lib/dom4j-1.6.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
